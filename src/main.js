@@ -49,7 +49,13 @@ fetchImageForm.addEventListener('submit', event => {
         return;
       }
         
-      imagesListEl.insertAdjacentHTML('beforeend', renderImages(data.hits));
+        imagesListEl.insertAdjacentHTML('beforeend', renderImages(data.hits));
+
+       const images = imagesListEl.querySelectorAll('.gallery-img');
+       const imagesToLoad = [...images].slice(0, 10);
+       Promise.all(imagesToLoad.map(img => new Promise(resolve => (img.onload = resolve))));
+
+      loader.classList.remove('active'); 
       lightbox.refresh();
     })
       
